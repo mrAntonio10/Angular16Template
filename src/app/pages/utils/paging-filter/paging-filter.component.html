@@ -1,0 +1,87 @@
+<div>
+	<div class="grid">
+		<div class="col-12">
+			<div class="card">
+				<h5> {{title}} </h5>
+				<button pButton type="button" label="Crear" *ngIf="createVisible" icon="pi pi-plus" class="p-button-success" (click)="navigateToCreate()"></button>
+				<hr>
+				<p-table 
+					[value]="this.value" 
+					dataKey="id"  [rows]="this.rows" 
+					[lazy]="true"
+					[totalRecords]="this.totalRecords"
+					[alwaysShowPaginator]="true"
+					(onLazyLoad)="loadData($event)" 
+					[rowsPerPageOptions]="[5, 10, 20, 50]"
+					[loading]="loading" 
+					showLoader="true"
+					[rowHover]="true" 
+					styleClass="p-datatable-gridlines" [paginator]="true" 
+					[globalFilterFields]="globalFilters" 
+					responsiveLayout="scroll"
+				>
+					<ng-template pTemplate="caption">
+						<div class="flex justify-content-between flex-column sm:flex-row">
+							<button pButton label="Clear" class="p-button-outlined mb-2" icon="pi pi-filter-slash" (click)="clear($event)"></button>
+							<!-- <span class="p-input-icon-left mb-2">
+								<i class="pi pi-search"></i>
+								<input pInputText type="text" #filter (input)="dt1.filterGlobal($event, 'contains')" placeholder="Buscar" class="w-full"/>
+							</span> -->
+						</div>
+					</ng-template>
+							<ng-template pTemplate="header">
+							<tr>
+								<th *ngFor="let dt of visibleColumns">
+									<div *ngIf="dt.visible"class="flex justify-content-between align-items-center">
+										{{ dt.thead }}
+										<p-columnFilter  *ngIf="dt.hasFilter" [type]="dt.ttype" [field]="dt.value" display="menu" [placeholder]="dt.filterplaceholder" [matchModeOptions]="['Contiene']" 
+										[matchMode]="'Contiene'"></p-columnFilter>
+									</div>
+								</th>
+							</tr>
+						</ng-template>
+					<ng-template pTemplate="body" let-data>
+						<tr>
+							<td *ngFor="let dt of visibleColumns" style="min-width: 12rem;">
+								<ng-container [ngSwitch]="dt.ttype">
+
+									<ng-container *ngSwitchCase="'actions'">
+											<ng-container *ngFor="let ac of actions">
+												<button pButton [icon]="ac.icon" [class]="ac.class" (click)="handleAction(ac.actionName, data)"></button>
+											</ng-container>
+									</ng-container>
+
+									<ng-container *ngSwitchCase="'verified'">
+										<td class="text-center" style="min-width: 8rem;">
+											<i class="pi" [ngClass]="{'true-icon pi-check-circle text-green-500': data[dt.value], 'false-icon pi-times-circle text-pink-500 ': !data[dt.value]}"></i>
+										</td>
+									</ng-container>
+
+									<ng-container *ngSwitchDefault>
+										<span>
+											{{ data[dt.value] }}
+										</span>
+									</ng-container>
+									
+								</ng-container>
+							</td>
+						</tr>
+					</ng-template>
+					
+					<ng-template pTemplate="emptymessage">
+						<tr>
+							<td colspan="7">No customers found.</td>
+						</tr>
+					</ng-template>
+					<ng-template pTemplate="loadingbody">
+						<tr>
+							<td colspan="7">Loading customers data. Please wait.</td>
+						</tr>
+					</ng-template>
+				</p-table>
+			</div>
+
+		</div>
+
+	</div>
+</div>

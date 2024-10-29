@@ -1,0 +1,19 @@
+<paging-filter
+    (pageChangeTriggered)="onPageChange($event)"
+    *ngIf="this.tableStructure && this.pageableData" 
+    [title]="'Empresas'"
+    [principalLabel]="'Gestión'"
+    [sucessorLabel]="'Empresas'"
+    [data]="this.pageableData"
+    [globalFilters]="gobalFilters"
+    [buildCreateForm]="createFormStructure"
+    [createVisible]="isVisibleCreate"
+    [actions]="actions"
+    [dataStructure]="this.tableStructure"
+    (actionTriggered)="handleActionTriggered($event)"
+    > </paging-filter>
+    <div class="col-6  flex justify-content-center">
+        <p-toast/>
+    </div>
+    <p-confirmDialog></p-confirmDialog>
+

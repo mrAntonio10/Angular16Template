@@ -1,0 +1,45 @@
+<div class="grid">
+	<div class="col-12">
+		<div class="card" *ngIf="this.permissions">
+			<h5>Permisos</h5>
+            <form [formGroup]="formGroup" (ngSubmit)="submitForm()">
+            <div class="p-fluid p-formgrid grid">
+                <div class="field col-12 md:col-4">	
+                        <label> Rol </label>
+                        <p-dropdown [formControlName]="'idRol'" [id]="'idRol'" [options]="permissions" optionLabel="name" optionValue="code" [(ngModel)]="selectedRole"></p-dropdown>
+                </div>
+            </div>
+            <button pButton type="submit" label="Buscar" style="width: 75px;"></button>
+            </form>
+            <hr>
+            <div *ngIf="permissionList && permissionList.length > 0">
+                <div *ngFor="let value of permissionList">
+                    <h5>{{ value.resourceName }}</h5>
+                    <hr>
+                    <div *ngFor="let operation of value.operationDtoList">
+                        <span style="display: flex; justify-content: space-between; align-items: center;"> 
+                            {{ operation.name }}       
+                            <button pButton type="button" (click)="getPermissionById(operation.id)" icon="pi pi-arrow-left" class="p-button-warning mr-2"></button>
+                        </span>
+                        <hr>
+                    </div>
+                </div>
+            </div>
+
+            <p-sidebar [(visible)]="isVisibleSideBar" position="right"  [style]="{width:'30em'}" [baseZIndex]="10000">
+                <h3 style="font-weight:normal">Permiso </h3>
+                <hr>
+
+                <form [formGroup]="permissionFormGroup" (ngSubmit)="submitForm()">
+                    <div class="p-fluid p-formgrid grid">
+                        <div class="field">
+                            <label> Estado </label>
+                                <p-toggleButton [formControlName]="'state'" [id]="'state'" [(ngModel)]="valToggle" onLabel="Si" offLabel="No" ></p-toggleButton>
+                        </div>
+                    </div>
+                    <button pButton type="submit" label="Aceptar"></button>
+                </form>
+            </p-sidebar>
+		</div>
+	</div>
+</div>

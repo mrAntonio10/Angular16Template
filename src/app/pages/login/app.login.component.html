@@ -1,0 +1,37 @@
+<div class="login-body">
+    <div class="login-panel p-fluid">
+        <div class="login-panel-header">
+            <img src="assets/layout/images/login/logo-sapphire-color.png">
+        </div>
+            <div class="login-panel-content">
+            <form autocomplete="off" [formGroup]="form">
+
+                <div class="grid">
+                    <div class="col-12">
+                        <h1>Coffe Manager</h1>
+                        <h2>Bienvenido, ¡tu próxima taza de café está por comenzar!</h2>
+                    </div>
+                    <div class="col-12">
+                        <span class="p-float-label">
+                            <input id="username" type="text" pInputText formControlName="email">
+                            <label for="username">Email</label>
+                            <small id="username-help" class="p-error" *ngIf="form.get('email').invalid && form.get('email').touched">
+                                Ingrese un correo electrónico válido.
+                            </small>
+                        </span>
+                    </div>
+                    <div class="col-12">
+                        <span class="p-float-label">
+                            <input id="password" type="password" pInputText formControlName="password">
+                            <label for="password">Password</label>
+                        </span>
+                    </div>
+                    <div class="col-6  flex justify-content-center">
+                        <p-toast/>
+                        <input pButton pRipple type="submit" class="submit" value="Iniciar Sesión" (click)="submitForm()"  [disabled]="!form.valid">
+                    </div>
+                </div>
+            </form>
+            </div>
+    </div>
+</div>
